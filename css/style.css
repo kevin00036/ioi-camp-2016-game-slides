@@ -4,6 +4,11 @@
 .reveal h3 {
     font-size: 1.15em !important;
 }
+
+.reveal img {
+    border: medium none !important;
+    border-radius: 2pt !important;
+}
 .reveal .prob {
     background-color: #382828;
     text-align: left;
@@ -17,11 +22,45 @@
     margin: 8px 0;
 }
 
-.reveal .prob > .prob-label {
+.reveal .prob > a {
+    font-size: 70%;
+}
+
+.reveal .prob > .label {
     display: inline-block;
     margin-right: 20px;
     font-size: 28px;
     padding: 2px 3px;
     border-radius: 4px;
     background-color: #201010;
+}
+
+.reveal .theorem {
+    background-color: #333333;
+    text-align: left;
+    margin: 10px auto;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 32px;
+}
+
+.reveal .theorem hr {
+    margin: 8px 0;
+}
+
+.reveal .theorem > a {
+    font-size: 70%;
+}
+
+.reveal .theorem > .label {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 28px;
+    padding: 2px 3px;
+    border-radius: 4px;
+    background-color: #101010;
+}
+
+.reveal .blackboard {
+    height: 250px;
 }

@@ -65,7 +65,7 @@ $(document).keypress(function(event)
     var colors = ['#ff0', '#0f0', '#0ff', '#f00', '#fff', '#00f', '#f0f', '#000'];
     var sizes = [1, 2, 3, 5, 8, 10, 15];
 
-    if ( event.ctrlKey && w >=49 && w < 49+colors.length) {
+    if ( true && w >=49 && w < 49+colors.length) {
         var newcolor = colors[w-49];
         $('#sketchCanvas').sketch().set('color', newcolor);
         $('#sketchDiv').css( "zIndex", 2);
@@ -84,7 +84,7 @@ $(document).keypress(function(event)
         } else {
             $('#sketchDiv').css('background-color','transparent')
         }
-    } else if ( w == 61 && event.ctrlKey ) { // Equals key
+    } else if ( w == 61 && event.shiftKey ) { // Equals key
         if ( currentSketchSize < sizes.length-1 ) {
             currentSketchSize++;
             $('#sketchCanvas').sketch().set('size', sizes[currentSketchSize]);

@@ -16,13 +16,21 @@ mixin mdslide
 
 mixin problem(arg)
   .prob
-    .prob-label 例題
+    .label 例題
     | #{arg['name']}
     if !!arg['src']
       if !!arg['url']
-        a(href=arg['url']) arg['src']
+        |  - 
+        a(href=arg['url'])= arg['src']
       else
         a arg['src']
+    hr
+    block
+      
+mixin theorem(arg)
+  .theorem
+    .label 定理
+    | #{arg['name']}
     hr
     block
 
@@ -35,5 +43,3 @@ mixin cd
   pre
     code(data-trim)
       block
-
-

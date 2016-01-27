@@ -34,6 +34,8 @@ html
     <![endif]-->
 
   body
+    block latex_settings
+
     .reveal
       block slides
 
@@ -61,6 +63,7 @@ html
           { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
           { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
           { src: 'reveal/plugin/notes/notes.js', async: true },
+          { src: 'reveal/plugin/math/math.js', async: true },
           { src: 'js/dazzleSketch.js', async: true }
         ]
       });

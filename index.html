@@ -5,7 +5,24 @@ link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal/css/print/pdf.css' : 'reveal/css/print/paper.css';
 document.getElementsByTagName( 'head' )[0].appendChild( link );
-</script><!--[if lt IE 9]><script src="lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section><h1>進階圖論</h1><p><div class="small">Created by Meteor</div></p></section><section><!DOCTYPE html><section data-markdown><script type="text/template">## 大綱
+</script><!--[if lt IE 9]><script src="lib/js/html5shiv.js"></script><![endif]--></head><body><div></div><div class="reveal"><div class="slides">\[ 
+  \newcommand{\ord}[1]{\opord\left(#1\right)}
+  \newcommand{\abs}[1]{\lvert #1 \rvert}
+  \newcommand{\floor}[1]{\lfloor #1 \rfloor}
+  \newcommand{\ceil}[1]{\lceil #1 \rceil}
+  \newcommand{\opord}{\operatorname{\mathcal{O}}}
+  \newcommand{\fail}{\operatorname{\mathcal{F}}}
+  \newcommand{\flk}{\operatorname{\mathfrak{F}}}
+  \newcommand{\suf}{\operatorname{\sigma}}
+  \newcommand{\rank}{\operatorname{\mathcal{R}}}
+  \newcommand{\sa}{\operatorname{\mathcal{SA}}}
+  \newcommand{\hei}{\operatorname{\mathcal{H}}}
+  \newcommand{\edps}{\operatorname{\mathcal{E}}}
+  \newcommand{\mx}{\operatorname{\mathcal{M}}}
+  \newcommand{\argmax}{\operatorname{arg\,max}}
+  \newcommand{\cons}[1]{\left[ \: #1 \: \right]}
+  \newcommand{\str}[1]{\texttt{"#1"}}
+\]<section><h1>進階圖論</h1><p><div class="small">Created by Meteor</div></p></section><section><!DOCTYPE html><section data-markdown><script type="text/template">## 大綱
 * 各種圖
 * 各種問題
 * 中間穿插各種題目
@@ -20,7 +37,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * 沒有環，且加一條邊就會有環。
 * 任兩個點都有唯一的簡單路徑。
 </script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹的子樹區間
-先看一個題目<div class="prob"><div class="prob-label">例題</div>學姊日談<hr><div>給你一棵樹，你要支援兩種操作 <br><ul><li> <code>add v x</code>: 把一個點的權重加 <code>x</code></li><li> <code>query v</code>: 問一個點到根上所有點的權重和</li></ul></div></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">樹鍊剖分？</p><p class="fragment">先觀察一下！</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">重點就是如何把一棵樹壓平</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 把樹壓平
+先看一個題目<div class="prob"><div class="label">例題</div>學姊日談<hr><div>給你一棵樹，你要支援兩種操作 <br><ul><li> <code>add v x</code>: 把一個點的權重加 <code>x</code></li><li> <code>query v</code>: 問一個點到根上所有點的權重和</li></ul></div></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">樹鍊剖分？</p><p class="fragment">先觀察一下！</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">重點就是如何把一棵樹壓平</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 把樹壓平
 
 ```
 int time_stamp = 0;
@@ -35,7 +52,50 @@ void dfs(int u) {
   end[u] = ++time_stamp;
 }
 ```
-</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Example</script></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Example
+![](/img/latex/tree_interv.svg)</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹分治  
+ <div class="prob"><div class="label">例題</div>Tree - <a href="http://poj.org/problem?id=1741">男人八題</a><hr>給一棵樹，樹的邊有權重表示距離，求距離不超過 \\( k \\) 的點對數。
+</div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="theorem"><div class="label">定理</div>樹的重心<hr>任一棵樹一定存在這麼樣的一個點，拔掉他以後所有的子樹大小都不超過 \\( \ceil{V / 2} \\)。</div><div class="blackboard"></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Time complexity
+
+\\[ T(n) = \sum T(n_i) + f(n) \\]
+
+\\[ T(n) \approx f(n) \log n \\]
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Time complexity
+
+\\[ T(n) = \sum T(n_i) + f(n) \\]
+
+\\[ T(n) \approx f(n) \log n \\]
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 回到原來那一題
+ <div class="blackboard"></div><p class="fragment">重點: 如何合併</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 啟發式合併  
+
+樹分治要找重心，很煩。
+
+在適當的條件下可以用啟發式合併，  
+不用找重心，DFS 下去合併上來就好了。
+
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="theorem"><div class="label">定理</div>啟發式合併<hr>如果在合併時，每次都把其它的合併到最大的， <br/>
+複雜度是 \\( T(n) = (n \log n) g(n) \\)。</div><div class="blackboard"></div>關鍵還是在合併</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 回到原來那一題
+ <div class="blackboard"></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>中位數<hr>你要維護兩種操作<ul><li><code>query i</code> : 問第 \\( i \\) 個 set 的中位數。</li><li><code>merge i j</code> : 把第 \\( j \\) 個 set 裡的所有元素丟到 \\( i \\) 裡。</li></ul></div></script></section></section><section><!DOCTYPE html><section><h1>平面圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 平面圖的定義
+
+存在一個畫在平面的方法使得  
+任兩條邊至多只在頂點相交。
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">比如正八面體是平面圖。  
+但 \\( K_{3, 3} \\) 不是。<div class="blackboard"></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>平面圖的最大團<hr></div>給你一個平面圖，求他最大團的大小。 \\( \abs{V} \leq 2 \cdot 10^5 \\)<br>在解這題之前，我們先看一些平面圖的性質</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 性質一： 邊很少
+ <div class="theorem"><div class="label">定理</div>歐拉定理<hr>對一個平面圖，\\( \abs{E} = \abs{V} + \abs{F} - 2 \\)
+</div><br><div class="theorem"><div class="label">定理</div><hr><p>對一個平面圖</p><ul><li>\\( \abs{E} \leq 3\abs{V} - 6 \\)</li><li>一定有一個點的度數不超過 \\( 5 \\)</li></ul></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">每次都找度數最小的那個點。</p><p class="fragment">枚舉完這個點就拔掉。</p><p class="fragment">拔了這個點之後還是一個平面圖。</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 性質二： Forbidden Graph
+ <div class="theorem"><div class="label">定理</div>平面圖的 Forbidden graph<hr>平面圖沒有 \\( K\_5 \\) 和 \\( K\_{3,3} \\)。
+</div><img style="width: 30%; margin-right: 5%; vertical-align: middle;" src="/img/latex/K5.svg" class="fragment"><img style="width: 30%; vertical-align: middle;" src="/img/latex/K33.svg" class="fragment"></script></section></section><section><!DOCTYPE html><section><h1>競賽圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 競賽圖的定義
+「有向完全圖」<br><img width="30%" src="img/latex/compete.svg"></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>Cycle - <a href="http://codeforces.com/problemset/problem/117/C">Codeforces 117C</a><hr>給你一個競賽圖，找一個三環。 \\( \abs{V} \leq 2 \cdot 10^5 \\)
+</div><img width="30%" src="img/latex/compete3.svg"></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">有沒有可能無解？</p><p class="fragment">一定有環？</p><div class="blackboard"></div></script></section></section><section><!DOCTYPE html><section><h1>二分圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 二分圖的定義
+可以分成兩團 \\( A, B \\) 的圖。  
+同在一團的兩個點 \\( u, v \\) 沒有邊。<p class="fragment">也可以說是能黑白染色的圖。</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 判斷一個圖是不是二分圖
+ 
+黑白染色。
+ <div class="fragment"><div class="prob"><div class="label">例題</div>平面圖的最大團<hr>現在有一個未知的序列 \\( a\_1, a\_2, \dots, a\_n \\)，依序給你資訊 \\( (s, t, p) \\)，
+其中 \\( p \in \{0, 1\} \\) 代表 \\( a\_s + a\_{s+1} + \dots + a\_t \equiv p \pmod{2} \\)，  
+每次你要判斷給你的資訊會不會和已知的資訊有所矛盾，並且如果有矛盾則捨棄之。
+
+</div></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">令 \\( b_i = \sum a_i \\) ，題目等於跟你講 \\( b_i, b_j \\) 是否同奇偶。</p><p class="fragment">你跟我一樣 \\( \implies \\) 併查集</p><p class="fragment">不一樣呢？</p><div class="blackboard"></div></script></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
   controls: true,
@@ -53,6 +113,7 @@ Reveal.initialize({
     { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
     { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
     { src: 'reveal/plugin/notes/notes.js', async: true },
+    { src: 'reveal/plugin/math/math.js', async: true },
     { src: 'js/dazzleSketch.js', async: true }
   ]
 });</script></body></html>
