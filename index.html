@@ -1,0 +1,58 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>reveal.js – The HTML Presentation Framework</title><meta name="description" content="A framework for easily creating beautiful presentations using HTML"><meta name="author" content="Hakim El Hattab"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"><link rel="stylesheet" href="reveal/css/reveal.css"><link rel="stylesheet" href="reveal/css/theme/black.css" id="theme"><link rel="stylesheet" href="css/style.css"><!-- Code syntax highlighting -->
+<link rel="stylesheet" href="reveal/lib/css/zenburn.css">
+<!-- Printing and PDF exports --><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal/css/print/pdf.css' : 'reveal/css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script><!--[if lt IE 9]><script src="lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section><h1>進階圖論</h1><p><div class="small">Created by Meteor</div></p></section><section><!DOCTYPE html><section data-markdown><script type="text/template">## 大綱
+* 各種圖
+* 各種問題
+* 中間穿插各種題目
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 如果有時間的話
+* 線性規劃
+* 趣題選講
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">其實就是很一般的圖論而已，  
+也沒有什麼「進階」的。 
+</script></section></section><section><!DOCTYPE html><section><h1>圖的種類</h1></section></section><section><!DOCTYPE html><section><h1>樹</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹的定義
+有各種版本
+* 沒有環的連通圖。
+* 沒有環，且加一條邊就會有環。
+* 任兩個點都有唯一的簡單路徑。
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹的子樹區間
+先看一個題目<div class="prob"><div class="prob-label">例題</div>學姊日談<hr><div>給你一棵樹，你要支援兩種操作 <br><ul><li> <code>add v x</code>: 把一個點的權重加 <code>x</code></li><li> <code>query v</code>: 問一個點到根上所有點的權重和</li></ul></div></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">樹鍊剖分？</p><p class="fragment">先觀察一下！</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">重點就是如何把一棵樹壓平</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 把樹壓平
+
+```
+int time_stamp = 0;
+
+void dfs(int u) {
+  start[u] = time_stamp;
+
+  for (v: adj[u]) {
+    dfs(v);
+  }
+
+  end[u] = ++time_stamp;
+}
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Example</script></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+  controls: true,
+  progress: true,
+  history: true,
+  center: true,
+
+  transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+  // Optional reveal.js plugins
+  dependencies: [
+    { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
+    { src: 'reveal/plugin/notes/notes.js', async: true },
+    { src: 'js/dazzleSketch.js', async: true }
+  ]
+});</script></body></html>

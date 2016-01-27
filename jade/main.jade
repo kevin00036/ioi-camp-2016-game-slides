@@ -1,0 +1,28 @@
+doctype html
+extends ./layout
+include ./mixin
+
+block slides
+  .slides
+    section
+      h1 進階圖論
+      p
+        .small Created by Meteor
+
+    section
+      +slide(data-markdown=true).
+        ## 大綱
+        * 各種圖
+        * 各種問題
+        * 中間穿插各種題目
+
+      +slide(data-markdown=true).
+        ## 如果有時間的話
+        * 線性規劃
+        * 趣題選講
+
+      +slide(data-markdown=true).
+        其實就是很一般的圖論而已，  
+        也沒有什麼「進階」的。 
+
+    include graphs/main

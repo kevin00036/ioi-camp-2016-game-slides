@@ -1,0 +1,64 @@
+include ../mixin
+
+section
+  +slide
+    h1 圖的種類
+
+section
+  +slide
+    h1 樹
+
+  +mdslide.
+    ## 樹的定義
+    有各種版本
+    * 沒有環的連通圖。
+    * 沒有環，且加一條邊就會有環。
+    * 任兩個點都有唯一的簡單路徑。
+
+  +mdslide
+    | ## 樹的子樹區間
+    | 先看一個題目
+
+    +problem({name: '學姊日談'})
+      div 給你一棵樹，你要支援兩種操作 
+        br
+        ul
+          li 
+            code add v x
+            | : 把一個點的權重加 
+            code x
+          li 
+            code query v
+            | : 問一個點到根上所有點的權重和
+
+  +mdslide
+    p.fragment 樹鍊剖分？
+    p.fragment 先觀察一下！
+
+  +mdslide
+    p.fragment 重點就是如何把一棵樹壓平
+
+  +mdslide.
+    ### 把樹壓平
+
+    ```
+    int time_stamp = 0;
+
+    void dfs(int u) {
+      start[u] = time_stamp;
+
+      for (v: adj[u]) {
+        dfs(v);
+      }
+
+      end[u] = ++time_stamp;
+    }
+    ```
+
+  +mdslide.
+    ### Example
+
+
+
+
+
