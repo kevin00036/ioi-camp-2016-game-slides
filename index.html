@@ -27,67 +27,81 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * 各種問題
 * 中間穿插各種題目
 </script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 如果有時間的話
-* 線性規劃
+* ~~線性規劃~~
 * 趣題選講
 </script></section><!DOCTYPE html><section data-markdown><script type="text/template">其實就是很一般的圖論而已，  
 也沒有什麼「進階」的。 
-</script></section></section><section><!DOCTYPE html><section><h1>圖的種類</h1></section></section><section><!DOCTYPE html><section><h1>樹</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹的定義
+</script></section><!DOCTYPE html><section><h2>圖論關鍵</h2><ul><li class="fragment">知識 - 多記結論</li><li class="fragment">應變 - 臨場發揮</li><li class="fragment">拿紙出來用力畫啊</li></ul></section></section><section><!DOCTYPE html><section><h1>圖的種類</h1></section></section><section><!DOCTYPE html><section><h1>樹</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹的定義
 有各種版本
 * 沒有環的連通圖。
 * 沒有環，且加一條邊就會有環。
-* 任兩個點都有唯一的簡單路徑。
-</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹的子樹區間
-先看一個題目<div class="prob"><div class="label">例題</div>學姊日談<hr><div>給你一棵樹，你要支援兩種操作 <br><ul><li> <code>add v x</code>: 把一個點的權重加 <code>x</code></li><li> <code>query v</code>: 問一個點到根上所有點的權重和</li></ul></div></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">樹鍊剖分？</p><p class="fragment">先觀察一下！</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">重點就是如何把一棵樹壓平</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 把樹壓平
+* 任兩個點都有唯一的簡單路徑。<aside class="notes">這通常是出題著要出樹的題目，不想直接寫。
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹的子樹區間
+先看一個題目<div class="prob"><div class="label">例題</div>學姊日談<hr><div>給你一棵樹，你要支援兩種操作 <br><ul><li> <code>add v x</code>: 把一個點的權重加 <code>x</code></li><li> <code>query v</code>: 問一個點到根上所有點的權重和</li></ul></div></div><aside class="notes">第一個是樹的子樹區間，我們先看一個例題。
 
-```
-int time_stamp = 0;
-
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p>先觀察一下！</p><div class="blackboard"></div><aside class="notes">有些人可能一劈頭就樹鍊剖分下去，
+先觀察可能有更簡潔的作法。說明這個題目就只是子樹
+修改而已。
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p>重點就是如何把一棵樹壓平</p><aside class="notes">不只要把一棵樹序列化，還希望一個子樹就對應到一個區間。
+</aside></script></section><!DOCTYPE html><section><h3>把樹壓平</h3><pre><code>int time_stamp = 0;
 void dfs(int u) {
   start[u] = time_stamp;
-
   for (v: adj[u]) {
     dfs(v);
   }
-
   end[u] = ++time_stamp;
 }
-```
-</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Example
-![](/img/latex/tree_interv.svg)</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹分治  
+</code></pre><aside class="notes">這邊就直接說結論，只要在 DFS 時把進入/離開節點的時間
+記下來，就是一個合理的區間序列！
+帶過一次 Code，說明區間是開的。
+</aside></section><!DOCTYPE html><section data-markdown><script type="text/template">### Example
+![](/img/latex/tree_interv.svg)<aside class="notes">這邊用閉區間，可以用開區間畫過一次。</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹分治  
  <div class="prob"><div class="label">例題</div>Tree - <a href="http://poj.org/problem?id=1741">男人八題</a><hr>給一棵樹，樹的邊有權重表示距離，求距離不超過 \\( k \\) 的點對數。
-</div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="theorem"><div class="label">定理</div>樹的重心<hr>任一棵樹一定存在這麼樣的一個點，拔掉他以後所有的子樹大小都不超過 \\( \ceil{V / 2} \\)。</div><div class="blackboard"></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Time complexity
-
+\\( \abs{V} \leq 10^4 \\)</div><div class="blackboard"></div><aside class="notes"><ul><li>先講解一下題目。</li><li>這種跟路徑有關的問題通常有兩種做法，
+一種是直接枚舉兩個端點。TLE。
+一種是枚舉 LCS (或說路徑上一點)。</li><li>先說一下這題枚舉 LCS 大致作法。</li><li>用普通分治解說一下複雜度，說明最大的子樹不能太大。</li></ul></aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="theorem"><div class="label">定理</div>樹的重心<hr>任一棵樹一定存在這麼樣的一個點，拔掉他以後所有的子樹大小都不超過 \\( \ceil{V / 2} \\)。</div><div class="blackboard"></div><aside class="notes">挑到各點距離和最小的點就是
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><pre><code>int dfs(int v) {
+    int total = 0, biggest = 0;
+    for (u: adj[v]) {
+        int t = dfs(u);
+        biggest = max(biggest, t);
+        total += t;
+    }
+    biggest = max(biggest, V - total - 1);
+    return total + 1;
+}
+</code></pre><aside class="notes">遞迴下去取 max ，別忘了最外面那一坨。
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Time complexity
+  
 \\[ T(n) = \sum T(n_i) + f(n) \\]
+ 
+\\[ T(n) \approx f(n) \log n \\]<aside class="notes">注意這個結論不完全正確。
 
-\\[ T(n) \approx f(n) \log n \\]
-</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### Time complexity
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 回到原來那一題
+ <p class="fragment">重點: 如何合併</p><div class="blackboard"></div><aside class="notes">基本上「樹分治」是一個架構，題目的重點在於怎麼合併</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 啟發式合併  
+樹分治要找重心，很煩。<p class="fragment">在適當的條件下可以用啟發式合併，  
+不用找重心，DFS 下去合併上來就好了。</p><aside class="notes">畫圖說明一下什麼是 DFS 下去合併。
+剛剛 D&C 要找重心，現在不用，直接拿根。</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="theorem"><div class="label">定理</div>啟發式合併<hr>如果在合併時，每次都把其它的合併到最大的， <br/>
+複雜度是 \\( T(n) = (n \log n) g(n) \\)。
+</div>關鍵還是在合併<div class="blackboard"></div><aside class="notes">g(n) 是把一個小的元素丟到大的所花時間。
 
-\\[ T(n) = \sum T(n_i) + f(n) \\]
-
-\\[ T(n) \approx f(n) \log n \\]
-</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 回到原來那一題
- <div class="blackboard"></div><p class="fragment">重點: 如何合併</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 啟發式合併  
-
-樹分治要找重心，很煩。
-
-在適當的條件下可以用啟發式合併，  
-不用找重心，DFS 下去合併上來就好了。
-
-</script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="theorem"><div class="label">定理</div>啟發式合併<hr>如果在合併時，每次都把其它的合併到最大的， <br/>
-複雜度是 \\( T(n) = (n \log n) g(n) \\)。</div><div class="blackboard"></div>關鍵還是在合併</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 回到原來那一題
- <div class="blackboard"></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>中位數<hr>你要維護兩種操作<ul><li><code>query i</code> : 問第 \\( i \\) 個 set 的中位數。</li><li><code>merge i j</code> : 把第 \\( j \\) 個 set 裡的所有元素丟到 \\( i \\) 裡。</li></ul></div></script></section></section><section><!DOCTYPE html><section><h1>平面圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 平面圖的定義
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 回到原來那一題
+ <div class="blackboard"></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>中位數<hr>你要維護兩種操作<ul><li><code>query i</code> : 問第 \\( i \\) 個 set 的中位數。</li><li><code>merge i j</code> : 把第 \\( j \\) 個 set 裡的所有元素丟到 \\( i \\) 裡。</li></ul></div><aside class="notes">當然可以用一些很厲害的 DS 如 treap 做到。</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 樹鍊剖分
+ <div class="prob"><div class="label">例題</div>QTREE - <a href="http://www.spoj.com/problems/QTREE/">SPOJ</a><hr>給你一棵樹，你要支援兩種操作<ul><li><code>change e v</code> : 把某個邊的權重改成 \\( v \\)</li><li><code>query a b</code> : 問 \\( a \\) 到 \\( b \\) 的路徑上權重最大的邊。</li></ul></div></script></section><!DOCTYPE html><section><p>把所有樹上的邊分成輕/重鍊。</p><ul><li>每個點往他最大子樹連的邊是重邊。</li><li>每個點往他最大子樹連的邊是輕邊。</li></ul><aside class="notes">要注意不是最深的子樹。</aside></section><!DOCTYPE html><section><div class="theorem"><div class="label">定理</div><hr>路徑上最多經過 \( \ord{\log \abs{V}} \) 條輕邊。</div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>小結</h3><p class="fragment">把重邊開成線段樹等等。</p><p class="fragment">輕邊直接算答案。</p></section><!DOCTYPE html><section><h2>Link-cut tree</h2><p>把重邊用 Splay tree, treap 等等可以 split 的資料結構維護。</p><p class="fragment">可以拔邊</p></section></section><section><!DOCTYPE html><section><h1>平面圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 平面圖的定義
 
 存在一個畫在平面的方法使得  
 任兩條邊至多只在頂點相交。
 </script></section><!DOCTYPE html><section data-markdown><script type="text/template">比如正八面體是平面圖。  
-但 \\( K_{3, 3} \\) 不是。<div class="blackboard"></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>平面圖的最大團<hr>給你一個平面圖，求他最大團的大小。 \\( \abs{V} \leq 2 \cdot 10^5 \\)
-</div><br>在解這題之前，我們先看一些平面圖的性質</script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 性質一： 邊很少
+但 \\( K_{3, 3} \\) 不是。<div class="blackboard"></div><aside class="notes"><ul><li>畫正八面體，不是立體的嗎？</li><li>所有多面體都是平面圖，投影。</li><li>K33 常見的題目，井接水管。</li></ul></aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>平面圖的最大團<hr>給你一個平面圖，求他最大團的大小。 \\( \abs{V} \leq 2 \cdot 10^5 \\)
+</div><br>在解這題之前，我們先看一些平面圖的性質<aside class="notes">最大團就是最大的一個完全子圖。</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 性質一： 邊很少
  <div class="theorem"><div class="label">定理</div>歐拉定理<hr>對一個平面圖，\\( \abs{E} = \abs{V} + \abs{F} - 2 \\)
-</div><br><div class="theorem"><div class="label">定理</div><hr><p>對一個平面圖</p><ul><li>\\( \abs{E} \leq 3\abs{V} - 6 \\)</li><li>一定有一個點的度數不超過 \\( 5 \\)</li></ul></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">每次都找度數最小的那個點。</p><p class="fragment">枚舉完這個點就拔掉。</p><p class="fragment">拔了這個點之後還是一個平面圖。</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 性質二： Forbidden Graph
+</div><br><div class="theorem"><div class="label">定理</div><hr><p>對一個平面圖</p><ul><li>\\( \abs{E} \leq 3\abs{V} - 6 \\)</li><li>一定有一個點的度數不超過 \\( 5 \\)</li></ul></div><aside class="notes"><ul><li>說明「面」</li><li>證明 th2， 3F < 2E。</li><li>平均概念說明 th3.</li></ul></aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">每次都找度數最小的那個點。</p><p class="fragment">枚舉完這個點就拔掉。</p><p class="fragment">拔了這個點之後還是一個平面圖。</p><aside class="notes">如果一個點度數少，可以直接枚舉他的鄰居。
+
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 性質二： Forbidden Graph
  <div class="theorem"><div class="label">定理</div>平面圖的 Forbidden graph<hr>平面圖沒有 \\( K\_5 \\) 和 \\( K\_{3,3} \\)。
-</div><img style="width: 30%; margin-right: 5%; vertical-align: middle;" src="/img/latex/K5.svg" class="fragment"><img style="width: 30%; vertical-align: middle;" src="/img/latex/K33.svg" class="fragment"></script></section></section><section><!DOCTYPE html><section><h1>競賽圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 競賽圖的定義
+</div><img style="width: 30%; margin-right: 5%; vertical-align: middle;" src="/img/latex/K5.svg" class="fragment"><img style="width: 30%; vertical-align: middle;" src="/img/latex/K33.svg" class="fragment"><aside class="notes"><ul><li>K5 證明 => 歐拉。</li><li>K3,3 證明 => 沒有 3 環。</li></ul></aside></script></section></section><section><!DOCTYPE html><section><h1>競賽圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 競賽圖的定義
 「有向完全圖」<br><img width="30%" src="img/latex/compete.svg"></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><div class="prob"><div class="label">例題</div>Cycle - <a href="http://codeforces.com/problemset/problem/117/C">Codeforces 117C</a><hr>給你一個競賽圖，找一個三環。 \\( \abs{V} \leq 2 \cdot 10^5 \\)
-</div><img width="30%" src="img/latex/compete3.svg"></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">有沒有可能無解？</p><p class="fragment">一定有環？</p><div class="blackboard"></div></script></section></section><section><!DOCTYPE html><section><h1>二分圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 二分圖的定義
+</div><img width="30%" src="img/latex/compete3.svg"></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">有沒有可能無解？</p><p class="fragment">一定有環？</p><div class="blackboard"></div><aside class="notes"><ul><li>無解 => 最無聊的情況， 1 > 2 > 3</li><li>若無環 => 總有最大的 (SCC) </li><li>有環 => 3 環。</li></ul></aside></script></section></section><section><!DOCTYPE html><section><h1>二分圖</h1></section><!DOCTYPE html><section data-markdown><script type="text/template">## 二分圖的定義
 可以分成兩團 \\( A, B \\) 的圖。  
 同在一團的兩個點 \\( u, v \\) 沒有邊。<p class="fragment">也可以說是能黑白染色的圖。</p></script></section><!DOCTYPE html><section data-markdown><script type="text/template">### 判斷一個圖是不是二分圖
  
@@ -95,13 +109,18 @@ void dfs(int u) {
  <div class="fragment"><div class="prob"><div class="label">例題</div>平面圖的最大團<hr>現在有一個未知的序列 \\( a\_1, a\_2, \dots, a\_n \\)，依序給你資訊 \\( (s, t, p) \\)，
 其中 \\( p \in \{0, 1\} \\) 代表 \\( a\_s + a\_{s+1} + \dots + a\_t \equiv p \pmod{2} \\)，  
 每次你要判斷給你的資訊會不會和已知的資訊有所矛盾，並且如果有矛盾則捨棄之。
-
-</div></div></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">令 \\( b_i = \sum a_i \\) ，題目等於跟你講 \\( b_i, b_j \\) 是否同奇偶。</p><p class="fragment">你跟我一樣 \\( \implies \\) 併查集</p><p class="fragment">不一樣呢？</p><div class="blackboard"></div></script></section></section><section><!DOCTYPE html><section><h1>圖的問題</h1></section></section><section><!DOCTYPE html><section><h2>2-SAT</h2><p>給你一個像以下的式子</p>\[ (x_1 \lor \lnot x_2) \land (\lnot x_3 \lor \lnot x_1) \land (x_{4} \lor x_{3}) \]
-是否有一種變數的 assign 方法使得這個式子結果為<code>true</code>?</section><!DOCTYPE html><section> <h2>布林恆等式</h2><p>\[ A \lor B \iff \lnot A \rightarrow B \iff \lnot B \rightarrow A \]</p><p class="fragment">\[ A \to B, B \to C \quad \vdash \quad A \to C \]</p></section><!DOCTYPE html><section> <div class="theorem"><div class="label">定理</div>2-SAT 的有解條件<hr>2-SAT 有解若且唯若這些式子是一致的。</div><div class="blackboard"></div></section><!DOCTYPE html><section> <h3>建模</h3><div><span class="vertmid space-right fragment">\( x_1 \lor x_2 \)</span><img width="20%" src="img/latex/sat1.svg" class="vertmid fragment"></div><div><span class="vertmid space-right fragment">\( x_1 \lor x_1 \)</span><img width="20%" src="img/latex/sat2.svg" class="vertmid fragment"></div></section><!DOCTYPE html><section> <p>也就是這些 \( \square \to \square \) 不能讓 \( x_i, \lnot x_i \)在同一個環</p><p class="fragment">SCC，用 tarjan 等等演算法 \( \ord{n} \)</p></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div><hr><p> </p>給你一個 \( R \times C \) 的方格，你有一種特殊的炮彈可以炸一排或一列，
-不過同一排或一列最多只能炸一次。每一格除了可能是空地外，還有可能是<ul><li>敵方要塞，你必須炸兩次才能消滅他。</li><li>敵方軍團，你必須炸一次以上才能消滅。</li><li>住宅區，為了必免無辜的人受害，最多只能炸一次。</li><li>醫院，這個不用說，當然是炸都不能炸。</li></ul><p>問你每一排及每一列該選擇炸或是不炸，才能使每一格都符合上述的需求？ \( \ord{R+C+N} \)</p></div></section><!DOCTYPE html><section><p>怎麼轉成 2-SAT</p><div class="blackboard"></div></section><!DOCTYPE html><section><h2>3-SAT</h2><p>雖然只差一點，但是個 NP 問題。</p></section></section><section><!DOCTYPE html><section><h2>Coloring</h2><ul> <li>點塗色：把每個點塗一個顏色，<br>使得任兩個相鄰的點都不同色。</li><li class="fragment">邊塗色：把每個邊塗一個顏色，  <br>使得一個點出去的邊都不同色。</li></ul><p class="fragment">都是 NPC Problem</p></section><!DOCTYPE html><section><h2>點著色</h2><div class="prob"><div class="label">例題</div>K Graph Oddity - <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=16&amp;page=show_problem&amp;problem=4488">uva 4488</a><hr>給你一個連通圖 \( G \) 滿足 \( G \) 有奇數個點，且存在一個奇數 \( k \) 使得所有點的度數都
-不超過 \( k \)。請你把這張圖點 \( k \) 著色。 \( \abs{V} \leq 9999, \abs{E} \leq 10^5 \)
-</div><div class="blackboard"></div></section><!DOCTYPE html><section> <h2>邊著色</h2><div class="theorem"><div class="label">定理</div>Vizing's theorem<hr>任意一個簡單圖的邊著色數一定是 \( d, d+1 \) 中的一個， <br/>
-其中 \( d = \max\limits_{v \in V} \deg(v) \)。</div><div class="blackboard"></div></section></section><section><!DOCTYPE html><section><h2>Euler path</h2>一筆畫走完整張圖。</section><!DOCTYPE html><section><h3>Example</h3><img width="60%" src="img/latex/euler.svg"></section><!DOCTYPE html><section> <div class="theorem"><div class="label">定理</div>Euler Path 的存在條件<hr>定義一個 <b> 奇點 </b> 是度數為奇數的點。如果圖連通，有<ul><li class="fragment">一個無向圖有歐拉路徑的條件是其奇點的個數是 \( 0 \) 或 \( 2 \)。</li><li class="fragment">一個無向圖有歐拉迴路的條件是其奇點的個數是 \( 0 \)。</li><li class="fragment">一個有向圖有歐拉路徑的條件是所有點都滿足 \( \deg^+(v) = \deg^-(v) \)， <br/>
+</div></div><aside class="notes">先說明題意，並舉個矛盾的例子。
+</aside></script></section><!DOCTYPE html><section data-markdown><script type="text/template"><p class="fragment">令 \\( b_i = \sum a_i \\) ，題目等於跟你講 \\( b_i, b_j \\) 是否同奇偶。</p><p class="fragment">你跟我一樣 \\( \implies \\) 併查集</p><p class="fragment">不一樣呢？</p><div class="blackboard"></div><aside class="notes"><ul><li>做前綴和。 sum(a_i) = b_j - b_i</li><li>先考慮同奇偶。</li><li>不同奇偶，多一個點。</li></ul></aside></script></section></section><section><!DOCTYPE html><section><h1>圖的問題</h1></section></section><section><!DOCTYPE html><section><h2>Complexity classes</h2><p>我們都希望所有問題都可以在 Polynomial time 完成。</p><p class="fragment">事與願違，有些問題一直找不到多項式演算法，又證不了不存在。</p><p class="fragment">假設我們有個超強的電腦。</p></section><!DOCTYPE html><section><h2>Nondeterministic Turing machine</h2><p>幸運值 Max, 永遠選到最快到終點的一條搜索路徑。</p><p class="fragment">普通電腦多項式可以解的就叫 P, Nondeterministic Turing
+machine 可以在多項式解的就叫 NP</p><p class="fragment">NP = P ?</p></section><!DOCTYPE html><section><h2>NPC</h2><p>NP 裡最難的一些問題就叫做 NPC</p><p class="fragment">如果這些問題在 P ，所有 NP 問題都在 P， P = NP</p><div class="blackboard"></div><aside class="notes">可以畫 P NP NPC NP-Hard GI BQP</aside></section><!DOCTYPE html><section><h2>Cook-Levin Theorem</h2><div class="theorem"><div class="label">定理</div>Cook-Levin Theorem<hr>SAT \( \in \) NPC。
+</div></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>經典問題<hr><p>證明</p><ul><li>3-SAT \( \in \) NPC</li><li>3-color \( \in \) NPC</li></ul></div><div class="blackboard"></div></section></section><section><!DOCTYPE html><section><h2>2-SAT</h2><p>給你一個像以下的式子</p>\[ (x_1 \lor \lnot x_2) \land (\lnot x_3 \lor \lnot x_1) \land (x_{4} \lor x_{3}) \]
+是否有一種變數的 assign 方法使得這個式子結果為<code>true</code>?<aside class="notes">比如 x_1, not x_3, x_4
+說明一下符號，U = 多 倒U = 少
+</aside></section><!DOCTYPE html><section> <h2>布林恆等式</h2><p>\[ A \lor B \iff \lnot A \rightarrow B \iff \lnot B \rightarrow A \]</p><p class="fragment">\[ A \to B, B \to C \quad \vdash \quad A \to C \]</p><aside class="notes">先說一下布林恆等式。<br><ul> <li>-> = 則</li><li>A or B = 沒有 A 一定要 B ，舉個例子說明。</li></ul></aside></section><!DOCTYPE html><section> <div class="theorem"><div class="label">定理</div>2-SAT 的有解條件<hr>2-SAT 有解若且唯若這些式子是一致的。</div><div class="blackboard"></div><aside class="notes"><ul> <li>一致就是不會自相矛盾</li><li>A -> not A 慘</li><li>舉一下剛剛的例子。</li></ul></aside></section><!DOCTYPE html><section> <h3>建模</h3><div><span class="vertmid space-right fragment">\( x_1 \lor x_2 \)</span><img width="20%" src="img/latex/sat1.svg" class="vertmid fragment"></div><div><span class="vertmid space-right fragment">\( x_1 \lor x_1 \)</span><img width="20%" src="img/latex/sat2.svg" class="vertmid fragment"></div><aside class="notes"><x1>or x1 = x1 ，用恆等式解釋。</x1></aside></section><!DOCTYPE html><section> <p>也就是這些 \( \square \to \square \) 不能讓 \( x_i, \lnot x_i \)在同一個環</p><p class="fragment">SCC，用 tarjan 等等演算法 \( \ord{n} \)</p><aside class="notes">不知道 SCC 的叫他回去(誤)</aside></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div><hr><p> </p>給你一個 \( R \times C \) 的方格，你有一種特殊的炮彈可以炸一排或一列，
+不過同一排或一列最多只能炸一次。每一格除了可能是空地外，還有可能是<ul><li>敵方要塞，你必須炸兩次才能消滅他。</li><li>敵方軍團，你必須炸一次以上才能消滅。</li><li>住宅區，為了必免無辜的人受害，最多只能炸一次。</li><li>醫院，這個不用說，當然是炸都不能炸。</li></ul><p>問你每一排及每一列該選擇炸或是不炸，才能使每一格都符合上述的需求？ \( \ord{R+C+N} \)</p></div></section><!DOCTYPE html><section><p>怎麼轉成 2-SAT</p><div class="blackboard"></div><aside class="notes"><ul><li>x_i or x_i</li><li>x_i or x_j</li><li>not x_i or not x_j</li><li>not x_i or not x_i</li></ul></aside></section><!DOCTYPE html><section><h2>3-SAT</h2><p>雖然只差一點，但是個 NP 問題。</p><aside class="notes">現在可以解到幾萬。</aside></section></section><section><!DOCTYPE html><section><h2>Coloring</h2><ul> <li>點塗色：把每個點塗一個顏色，<br>使得任兩個相鄰的點都不同色。</li><li class="fragment">邊塗色：把每個邊塗一個顏色，  <br>使得一個點出去的邊都不同色。</li></ul><p class="fragment">都是 NPC Problem</p></section><!DOCTYPE html><section><h2>點著色</h2><div class="prob"><div class="label">例題</div>K Graph Oddity - <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=16&amp;page=show_problem&amp;problem=4488">uva 4488</a><hr>給你一個連通圖 \( G \) 滿足 \( G \) 有<span class="fragment highlight-red">奇數</span>個點，且存在一個<span class="fragment highlight-red">奇數</span>\( k \) 使得所有點的度數都
+不超過 \( k \)。請你把這張圖點 \( k \) 著色。 \( \abs{V} \leq 9999, \abs{E} \leq 10^5 \)</div><div class="blackboard"></div><aside class="notes"><ul><li>deg k 的圖一定可以用 k+1 個顏色塗。</li><li>幾乎已經對了，可能是完全圖嗎？</li><li>跟平面圖那題很像！</li></ul></aside></section><!DOCTYPE html><section> <h2>邊著色</h2><div class="theorem"><div class="label">定理</div>Vizing's theorem<hr>任意一個簡單圖的邊著色數一定是 \( d, d+1 \) 中的一個， <br/>
+其中 \( d = \max\limits_{v \in V} \deg(v) \)。</div><div class="blackboard"></div><aside class="notes"><ul><li>deg k 的圖一定可以用 k+1 個顏色塗。</li><li>邊就沒有那麼顯然了。</li><li>概念複雜，我們用下面這個題目介紹。</li></ul></aside></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div>Edge coloring of bipartite graph - <a href="http://codeforces.com/problemset/problem/600/F">Codeforces 600F</a><hr>給你一個二分圖，用最小的顏色將他邊著色。 \( \abs{V} \leq 2000, \abs{E} \leq 10^5 \)
+</div></section><!DOCTYPE html><section><p class="fragment">答案是 \( d \).</p><p class="fragment">一個邊一個邊加上去。</p><div class="blackboard"></div><aside class="notes"><ul><li>如果兩個人有共同缺的顏色 -> easy.</li><li>如果沒有 設 x, y 塗 x</li><li>另一個點出去 x 邊改 y</li><li>另一個點出去 y 邊改 x ...</li><li>只會回到原來的點 or 可以塗。</li></ul></aside></section></section><section><!DOCTYPE html><section><h2>Euler path</h2>一筆畫走完整張圖。</section><!DOCTYPE html><section><h3>Example</h3><img width="60%" src="img/latex/euler.svg"></section><!DOCTYPE html><section><h3>有解的條件</h3><p>觀察一個路徑 \( v_1 \to v_2 \to \cdots \to v_n \)</p><p>每一個中間走到的點 \( +2 \) ，兩端 \( +1 \)。</p><aside class="notes">度數奇偶是關鍵
+</aside></section><!DOCTYPE html><section> <div class="theorem"><div class="label">定理</div>Euler Path 的存在條件<hr>定義一個 <b> 奇點 </b> 是度數為奇數的點。如果圖連通，有<ul><li class="fragment">一個無向圖有歐拉路徑的條件是其奇點的個數是 \( 0 \) 或 \( 2 \)。</li><li class="fragment">一個無向圖有歐拉迴路的條件是其奇點的個數是 \( 0 \)。</li><li class="fragment">一個有向圖有歐拉路徑的條件是所有點都滿足 \( \deg^+(v) = \deg^-(v) \)， <br/>
 或是除此之外有一個點滿足 \( \deg^+(v) = \deg^-(v) + 1 \)，<br/>
 另一個滿足 \( \deg^+(v) = \deg^-(v) - 1 \)。</li><li class="fragment">一個有向圖有歐拉迴路的條件是所有點都滿足 \( \deg^+(v) = \deg^-(v) \)，</li></ul></div><div class="blackboard"></div></section><!DOCTYPE html><section data-markdown><script type="text/template">## Algorithm
 ```
@@ -118,20 +137,59 @@ void dfs(int v) {
 </script></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>POI 某題<hr>給你一個圖，每個邊都有 \( 0, 1 \) 的值，你走過一個邊就會讓
 \( 0, 1 \) 互換，給你各個邊的起始值和目標值，問你存不存在這
 樣子的一個走法。
-</div><div class="blackboard"></div></section><!DOCTYPE html><section data-markdown><script type="text/template"><h2>Hamiltonian path</h2><p class="fragment">一條路徑走過所有的點恰好一次。</p><img width="30%" src="img/hamilton.png" class="fragment"><p class="fragment">NPC Problem。</p></script></section></section><section><!DOCTYPE html><section><h2>Matching</h2><p>幫每個點做配對，一個點只能配一次。</p><p>也可以想成是一些不相交的邊集。</p></section><!DOCTYPE html><section><h2>二分圖上的匹配問題。</h2><p class="fragment">可以轉成 Flow 來解。</p><p class="fragment">也可以用交錯路徑來想。</p></section><!DOCTYPE html><section><h2>交錯路徑</h2><img width="30%" src="img/latex/cross_road-0.svg" class="vertmid space-right"><img width="55%" src="img/latex/cross_road-1.svg" class="vertmid"></section><!DOCTYPE html><section> <h2>一般圖匹配</h2><p class="fragment">交錯路徑上會有奇環</p><p class="fragment">縮花，非常複雜。</p><div class="blackboard"></div></section><!DOCTYPE html><section> <h2>帶權完美匹配</h2><p class="fragment">二分圖可以轉成 Cost flow。</p><p class="fragment">一般圖可以先找一個完美匹配在找負環。</p><p class="fragment">或著點數小的時候可以狀態壓縮 DP。</p><div class="blackboard"></div></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>POI 某題<hr>給你一個圖，邊上有權重代表路徑長，你要找一個路徑，
+</div><div class="blackboard"></div><aside class="notes"><ul><li>把原始的邊和目標的邊做 Xor</li><li>小心連通的陷井。</li></ul></aside></section><!DOCTYPE html><section data-markdown><script type="text/template"><h2>Hamiltonian path</h2><p class="fragment">一條路徑走過所有的點恰好一次。</p><img width="30%" src="img/hamilton.png" class="fragment"></script></section><!DOCTYPE html><section><p class="fragment">NPC Problem。</p><p class="fragment">通常的做法是狀態壓縮 DP， \( \ord{2^n n^2} \)</p></section></section><section><!DOCTYPE html><section><h2>Matching</h2><p>幫每個點做配對，一個點只能配一次。</p><p>也可以想成是一些不相交的邊集。</p></section><!DOCTYPE html><section><h2>二分圖上的匹配問題。</h2><p class="fragment">可以轉成 Flow 來解。</p><p class="fragment">也可以用交錯路徑來想。</p><aside class="notes">Flow 我們在接下來的課程會再題
+</aside></section><!DOCTYPE html><section><h2>交錯路徑</h2><img width="30%" src="img/latex/cross_road-0.svg" class="vertmid space-right"><img width="55%" src="img/latex/cross_road-1.svg" class="vertmid"></section><!DOCTYPE html><section><p>一個匹配是最大匹配若且為若他沒有交錯路徑。</p><aside class="notes">講一下交錯樹。
+</aside></section><!DOCTYPE html><section> <h2>一般圖匹配</h2><p class="fragment">交錯路徑上會有奇環</p><p class="fragment">縮花，非常複雜。</p><div class="blackboard"></div><aside class="notes">畫一下。
+</aside></section><!DOCTYPE html><section> <h2>帶權完美匹配</h2><p class="fragment">二分圖可以轉成 Cost flow。</p><p class="fragment">一般圖可以先找一個完美匹配在找負環。</p><p class="fragment">或著點數小的時候可以狀態壓縮 DP。</p><div class="blackboard"></div><aside class="notes"><ul> <li>通常會要求最大匹配。</li><li>定義負環。</li></ul></aside></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>中國郵差問題<hr>給你一個圖，邊上有權重代表路徑長，你要找一個路徑，
 經過所有的邊至少一次(可以重複走)，最後回到出發點，問最短的路徑長。
-</div><p class="fragment">很像 Euler cycle。</p><div class="blackboard"></div></section><!DOCTYPE html><section><h2>一些相關的問題</h2><ul><li class="space-bottom fragment">最大獨立點集：一個最大的點集 \( V' \) 使得裡面的點都不相鄰。其大小記做 \( I(G) \)。</li><li class="space-bottom fragment">最大匹配數：前面定義過了。其大小記做 \( M(G) \)。</li><li class="space-bottom fragment">最小點覆蓋：最小的一個點集，使得所有的邊都至少與點集裡的一個點相鄰。其大小記做 \( C_v(G) \)。</li><li class="space-bottom fragment">最小邊覆蓋：最小的一個邊集，使得所有的點都至少與邊集裡的
-一個邊相鄰。其大小記做 \( C_e(G) \)。</li></ul></section><!DOCTYPE html><section><div class="space-right inline-block x3"><img src="img/latex/match_probs-0.svg">獨立點集</div><div class="space-right inline-block x3"><img src="img/latex/match_probs-1.svg">點覆蓋</div><div class="space-right inline-block x3"><img src="img/latex/match_probs-2.svg">邊覆蓋</div></section><!DOCTYPE html><section><div class="theorem"><div class="label">定理</div><hr><ul><li>\( I(G) + C_v(G) = \abs{V} \). </li><li>\( M(G) + C_e(G) = \abs{V} \).</li><li>對連通二分圖，有 \( M(G) = C_v(G), I(G) = C_e(G) \).</li></ul></div><div class="blackboard"></div></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div>Tower Defense Game - <a href="http://main.edu.pl/en/archive/oi/20/gra">POI XX</a><hr>給你一張圖 \( G \) ，一個 \( d \)-covering 是一個 \(V(G)\) 的子集 \( U \) 使得
+</div><p class="fragment">很像 Euler cycle。</p><div class="blackboard"></div><aside class="notes"><ul> <li>把他補成沒有奇點。</li><li>一次補兩個點。補外面的點不會比較好。</li><li>用最短路來補。</li><li>Matching</li></ul></aside></section><!DOCTYPE html><section><h2>一些相關的問題</h2><ul><li class="space-bottom fragment">最大獨立點集：一個最大的點集 \( V' \) 使得裡面的點都不相鄰。其大小記做 \( I(G) \)。</li><li class="space-bottom fragment">最大匹配數：前面定義過了。其大小記做 \( M(G) \)。</li><li class="space-bottom fragment">最小點覆蓋：最小的一個點集，使得所有的邊都至少與點集裡的一個點相鄰。其大小記做 \( C_v(G) \)。</li><li class="space-bottom fragment">最小邊覆蓋：最小的一個邊集，使得所有的點都至少與邊集裡的
+一個邊相鄰。其大小記做 \( C_e(G) \)。</li></ul><aside class="notes"><ul> <li>互不衝突的點。</li><li>很像壓紙。</li></ul></aside></section><!DOCTYPE html><section><div class="space-right inline-block x3"><img src="img/latex/match_probs-0.svg">獨立點集</div><div class="space-right inline-block x3"><img src="img/latex/match_probs-1.svg">點覆蓋</div><div class="space-right inline-block x3"><img src="img/latex/match_probs-2.svg">邊覆蓋</div></section><!DOCTYPE html><section><div class="theorem"><div class="label">定理</div><hr><ul><li>\( I(G) + C_v(G) = \abs{V} \). </li><li>\( M(G) + C_e(G) = \abs{V} \).</li><li>對連通二分圖，有 \( M(G) = C_v(G), I(G) = C_e(G) \).</li></ul></div><div class="blackboard"></div><aside class="notes"><ul> <li>點覆蓋的補集就是獨立點集。</li><li>先找一個最大匹配，補成邊覆蓋。 M + M + V - 2M = V</li></ul></aside></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div>Tower Defense Game - <a href="http://main.edu.pl/en/archive/oi/20/gra">POI XX</a><hr>給你一張圖 \( G \) ，一個 \( d \)-covering 是一個 \(V(G)\) 的子集 \( U \) 使得
 對於所有原圖上的點，一定有一個在 \( U \) 中的點使得這兩個點的距離不超過 \( d \)。
+
 現在以知這個圖存在一個大小不超過 \( k \) 的 \(1\)-covering，請找出一個大小
-不超過 \(k\) 的 \(2\)-covering。 \( \abs{V} \leq 5 \cdot 10^5, \abs{E} \leq 10^6 \)</div><div class="blackboard"></div></section></section><section><!DOCTYPE html><section><h2>Counting</h2>有時候會出現各種計算問題。</section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>經典問題<hr>問 \( n \) 個有編號的點可以形成多少種不同的樹。</div><div class="blackboard"></div></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>Connect Graph - <a href="http://poj.org/problem?id=1737">POJ 1737</a><hr>問 \( n \) 個有編號的點可以形成多少種不同的連通圖。</div><div class="blackboard"></div></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>經典問題<hr>問一張圖上有多少個三角形。</div><div class="blackboard"></div></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>經典問題<hr>在一個完全圖上，所有的邊被塗上黑、白兩種顏色，問你有多少個同色三角形。
-\( \abs{V} \leq 5000 \)</div><div class="blackboard"></div></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
+不超過 \(k\) 的 \(2\)-covering。 \( \abs{V} \leq 5 \cdot 10^5, \abs{E} \leq 10^6 \)
+</div><div class="blackboard"></div><aside class="notes">亂做都行！</aside></section></section><section><!DOCTYPE html><section><h2>Counting</h2>有時候會出現各種計算問題。</section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>經典問題<hr>問 \( n \) 個有編號的點可以形成多少種不同的樹。</div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>Prüfer sequence</h3><img width="35%" src="img/latex/prufer.svg"><aside class="notes"><ul><li>1 2 1 2 6</li><li>最後一定是最大的數。</li></ul></aside></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>Connect Graph - <a href="http://poj.org/problem?id=1737">POJ 1737</a><hr>問 \( n \) 個有編號的點可以形成多少種不同的連通圖。</div><div class="blackboard"></div><aside class="notes"><ul><li>用扣的</li><li>慢慢 DP</li><li>第一個點的連通塊</li><li>A[n] = 2^C(E, 2) - sum A[k] C(v, k-1) 2^C(v-k-1, 2)</li></ul></aside></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>經典問題<hr>問一張圖上有多少個三角形。</div><div class="blackboard"></div><aside class="notes"><ul><li>V^3 </li><li>枚舉 E </li><li>合併起來 E Sqrt(E) </li></ul></aside></section><!DOCTYPE html><section> <div class="prob"><div class="label">例題</div>經典問題<hr>在一個完全圖上，所有的邊被塗上黑、白兩種顏色，問你有多少個同色三角形。
+\( \abs{V} \leq 5000 \)</div><div class="blackboard"></div><aside class="notes"><ul><li>用扣的</li></ul></aside></section></section><section><!DOCTYPE html><section><h1>Linear Programming</h1></section><!DOCTYPE html><section><h2>Problem description</h2><p>example</p><p>Maximize \( x_1 - 2 x_2 + x_3 \)</p><p>Subject to 
+\[ \begin{align}
+x_1 + x_2 - x_3 & \leq 7 \\
+-x_1 - x_2 + x_3 & \leq -7 \\
+x_1 - 2 x_2 + 2 x_3 & \leq 4 \\
+x_1, x_2, x_3 & \geq 0  \\
+\end{align} \]</p></section><!DOCTYPE html><section><h2>Problem description</h2><p>Maximize \( \mathbf{c} \cdot \mathbf{x} \)</p><p>Subject to  \[ \mathbf{A} \mathbf{x} \leq b, \; \mathbf{x} \geq \mathbf{0} \]</p></section><!DOCTYPE html><section><h3>Example - s-t shortest path</h3><p>Min \( d_t \)</p><p>Subject to 
+\[ \begin{align}
+d_v & \leq d_u + w(u, v) \\
+d_s & = 0  \\
+\end{align} \]</p></section><!DOCTYPE html><section><h2>Dual Problem</h2><p>Maximize \( \mathbf{c} \cdot \mathbf{x} \) <br>
+Subject to  \[ \mathbf{A} \mathbf{x} \leq b, \; \mathbf{x} \geq \mathbf{0} \]</p><hr><p>Minimize \( \mathbf{b} \cdot \mathbf{y} \) <br>
+Subject to  \[ \mathbf{A}^T \mathbf{y} \leq c, \; \mathbf{x} \geq \mathbf{0} \]</p><br><p class="fragment">\[ \mathbf{c} \cdot \mathbf{x} = \mathbf{b} \cdot \mathbf{y} \]</p></section><!DOCTYPE html><section><h2>Example - Dual problem of weighted matching</h2><div class="blackboard"></div></section><!DOCTYPE html><section><h2>Simplex</h2><p>A non-polynomial algorithm to solve linear programming.</p></section><!DOCTYPE html><section><h2>Slack form</h2><p>Maximize \( 3x_1 + x_2 + 2x_3 \)
+ Subject to 
+\[ \begin{align}
+x_1 + x_2 + 3x_3 & \leq 30 \\
+2x_1 + 2x_2 + 5x_3 & \leq 24 \\
+4x_1 + x_2 + 2 x_3 & \leq 36 \\
+x_1, x_2, x_3 & \geq 0  \\
+\end{align} \]</p></section><!DOCTYPE html><section><h2>Slack form</h2><p>Maximize \( 3x_1 + x_2 + 2x_3 \)
+ Subject to 
+\[ \begin{align}
+30 - x_1 - x_2 - 3x_3 & = x_4 \\
+24 - 2x_1 - 2x_2 - 5x_3 & = x_5 \\
+36 - 4x_1 - x_2 - 2 x_3 & = x_6 \\
+x_1, x_2, x_3, x_4, x_5, x_6 & \geq 0  \\
+\end{align} \]</p></section><!DOCTYPE html><section><p>Maximize \( 3x_1 + x_2 + 2x_3 \)
+ Subject to 
+\[ \begin{align}
+30 - x_1 - x_2 - 3x_3 & = x_4 \\
+24 - 2x_1 - 2x_2 - 5x_3 & = x_5 \\
+36 - 4x_1 - x_2 - 2 x_3 & = x_6 \\
+\end{align} \]</p><p>Let us increase \( x_1 \). How much can we?</p></section><!DOCTYPE html><section><p>結論<ul><li>這個 form 被 \( n \) 個變數決定。</li><li>當 \( \mathbf{c} \) 每個分量都小於 \( 0 \)，就是
+最佳解</li><li>此時的 \( \mathbf{c} \) 是 dual problem 的答案。</li></ul></p></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
   controls: true,
   progress: true,
   history: true,
   center: true,
+  showNotes: true,
 
   transition: 'slide', // none/fade/slide/convex/concave/zoom
 
@@ -143,7 +201,19 @@ Reveal.initialize({
     { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
     { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
     { src: 'reveal/plugin/notes/notes.js', async: true },
-    { src: 'reveal/plugin/math/math.js', async: true },
+    { src: 'reveal/plugin/math/math.js', async: true, callback: function() {
+      setTimeout( function() {
+      MathJax.Hub.Config({
+        SVG: {
+          scale: 90
+          },
+        "HTML-CSS": {
+          scale: 90
+          }
+        });
+        MathJax.Hub.Rerender();
+      }, 1000);
+    }},
     { src: 'js/dazzleSketch.js', async: true }
   ]
 });</script></body></html>

@@ -10,6 +10,15 @@ section
 
     img(width="60%" src="img/latex/euler.svg")
 
+  +slide
+    h3 有解的條件
+
+    p 觀察一個路徑 \( v_1 \to v_2 \to \cdots \to v_n \)
+    p 每一個中間走到的點 \( +2 \) ，兩端 \( +1 \)。
+
+    aside.notes.
+      度數奇偶是關鍵
+
   +slide 
     +theorem({name: "Euler Path 的存在條件"})
       | 定義一個 <b> 奇點 </b> 是度數為奇數的點。如果圖連通，有
@@ -45,11 +54,19 @@ section
 
     .blackboard
 
+    aside.notes
+      ul
+        li 把原始的邊和目標的邊做 Xor
+        li 小心連通的陷井。
+
   +mdslide
     h2 Hamiltonian path
     p.fragment 一條路徑走過所有的點恰好一次。
     img.fragment(width="30%" src="img/hamilton.png")
+
+  +slide
     p.fragment NPC Problem。
+    p.fragment 通常的做法是狀態壓縮 DP， \( \ord{2^n n^2} \)
 
 
   

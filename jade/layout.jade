@@ -52,6 +52,7 @@ html
         progress: true,
         history: true,
         center: true,
+        showNotes: true,
 
         transition: 'slide', // none/fade/slide/convex/concave/zoom
 
@@ -63,7 +64,19 @@ html
           { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
           { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
           { src: 'reveal/plugin/notes/notes.js', async: true },
-          { src: 'reveal/plugin/math/math.js', async: true },
+          { src: 'reveal/plugin/math/math.js', async: true, callback: function() {
+            setTimeout( function() {
+            MathJax.Hub.Config({
+              SVG: {
+                scale: 90
+                },
+              "HTML-CSS": {
+                scale: 90
+                }
+              });
+              MathJax.Hub.Rerender();
+            }, 1000);
+          }},
           { src: 'js/dazzleSketch.js', async: true }
         ]
       });

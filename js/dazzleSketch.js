@@ -69,10 +69,10 @@ $(document).keypress(function(event)
         var newcolor = colors[w-49];
         $('#sketchCanvas').sketch().set('color', newcolor);
         $('#sketchDiv').css( "zIndex", 2);
-    } else if ( w == 96 && event.ctrlKey ) {
+    } else if ( w == 96 ) {
         clearSketchCanvas();
         $('#sketchDiv').css( "zIndex", -2);
-    } else if ( w == 31 && event.ctrlKey ) { // Minus key
+    } else if ( w == 45 ) { // Minus key
         if ( currentSketchSize > 0 ) {
             currentSketchSize--;
             $('#sketchCanvas').sketch().set('size', sizes[currentSketchSize]);
@@ -84,11 +84,13 @@ $(document).keypress(function(event)
         } else {
             $('#sketchDiv').css('background-color','transparent')
         }
-    } else if ( w == 61 && event.shiftKey ) { // Equals key
+    } else if ( w == 61 ) { // Equals key
         if ( currentSketchSize < sizes.length-1 ) {
             currentSketchSize++;
             $('#sketchCanvas').sketch().set('size', sizes[currentSketchSize]);
         }
+    } else if (w == 114) {
+        MathJax.Hub.Rerender();
     }
 });
 

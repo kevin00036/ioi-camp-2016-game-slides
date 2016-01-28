@@ -1,35 +1,41 @@
-+mdslide.
-  ## 樹鍊剖分
-
-  每個點
-
-  在適當的條件下可以用啟發式合併，  
-  不用找重心，DFS 下去合併上來就好了。
-  
-
 +mdslide
+  |## 樹鍊剖分
+  |  
 
-  +theorem({name: '啟發式合併'}).
-    如果在合併時，每次都把其它的合併到最大的， <br/>
-    複雜度是 \\( T(n) = (n \log n) g(n) \\)。
-  .blackboard
-
-  關鍵還是在合併
-
-+mdslide
-  | ### 回到原來那一題
-  | 
-
-  .blackboard
-
-+mdslide
-  +problem({name: '中位數'})
-    | 你要維護兩種操作
+  +problem({name: "QTREE", src: "SPOJ", url: "http://www.spoj.com/problems/QTREE/"})
+    | 給你一棵樹，你要支援兩種操作
     ul
       li
-        code query i
-        |  : 問第 \\( i \\) 個 set 的中位數。
+        code change e v
+        |  : 把某個邊的權重改成 \\( v \\)
       li
-        code merge i j
-        |  : 把第 \\( j \\) 個 set 裡的所有元素丟到 \\( i \\) 裡。
+        code query a b
+        |  : 問 \\( a \\) 到 \\( b \\) 的路徑上權重最大的邊。
+
++slide
+  p 把所有樹上的邊分成輕/重鍊。
+
+  ul
+    li 每個點往他最大子樹連的邊是重邊。
+    li 每個點往他最大子樹連的邊是輕邊。
+
+  aside.notes
+    要注意不是最深的子樹。
+
++slide
+  +theorem({name: ""})
+    路徑上最多經過 \( \ord{\log \abs{V}} \) 條輕邊。
+
+  .blackboard
+
++slide
+  h3 小結
+  p.fragment 把重邊開成線段樹等等。
+  p.fragment 輕邊直接算答案。
+
++slide
+  h2 Link-cut tree
+  p 把重邊用 Splay tree, treap 等等可以 split 的資料結構維護。
+
+  p.fragment 可以拔邊
 

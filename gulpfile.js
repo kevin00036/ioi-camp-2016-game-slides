@@ -18,8 +18,8 @@ gulp.task('jade', () => {
         .pipe( plumber() )
         .pipe( jade() )
         .pipe( rename('index.html') )
-        .pipe( connect.reload() )
-        .pipe( gulp.dest('./') );
+        .pipe( gulp.dest('./') )
+        .pipe( connect.reload() );
 });
 
 gulp.task('watch', () => {
