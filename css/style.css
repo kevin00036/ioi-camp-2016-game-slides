@@ -64,3 +64,27 @@
 .reveal .blackboard {
     height: 250px;
 }
+
+.reveal .vertmid {
+    vertical-align: middle;
+}
+
+.reveal .space-right {
+    margin-right: 30px;
+}
+
+.reveal .space-bottom {
+    margin-bottom: 10px;
+}
+
+.reveal .inline-block {
+    display: inline-block;
+}
+
+.reveal .x3 {
+    width: 30%;
+}
+
+.reveal .x2 {
+    width: 45%;
+}
