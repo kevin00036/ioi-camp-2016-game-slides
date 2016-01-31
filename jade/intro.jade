@@ -1,0 +1,48 @@
+include mixin
+
+section
+  +slide(data-markdown=true)
+    h1 簡介
+
+  +slide(data-markdown=true)
+    h2 賽局理論?
+    ul
+      li 研究鬥爭或競爭行為的數學方法
+      li 計算能夠獲得最大利益的最佳策略
+      li 又稱為**博弈**論
+
+  +slide(data-markdown=true)
+    h2 囚犯困局
+    table
+      tr 
+        td 
+        td 甲不認罪
+        td 甲認罪
+      tr 
+        td 乙不認罪 
+        td 二人同服刑半年
+        td 甲獲釋；乙服刑10年
+      tr 
+        td 乙認罪
+        td 甲服刑10年；乙獲釋
+        td **二人同服刑5年**
+    br
+    br
+    h3.fragment 不過這不是我們的重點
+
+  +slide(data-markdown=true)
+    h2 <font color="red">組合</font>賽局
+    ul
+      li.fragment 兩位玩家對戰，雙方輪流操作
+      li.fragment 資訊完全公開
+      li.fragment 決定性
+      li.fragment 必在有限步內結束
+      li.fragment 零和 (Zero-sum)
+
+  +slide(data-markdown=true)
+    h2 <font color="red">組合</font>賽局
+    ul
+      li.fragment OOXX
+      li.fragment 五子棋、象棋、西洋棋、圍棋
+      li.fragment 各種撿石頭
+
